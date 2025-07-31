@@ -7,152 +7,543 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #111827; /* bg-gray-900 */
-            color: #d1d5db; /* text-gray-300 */
+        * {
+            font-family: 'Inter', sans-serif;
         }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Gradient Text */
         .gradient-text {
-            background: linear-gradient(to right, #3b82f6, #818cf8);
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease-in-out infinite;
         }
-        .section-title {
-            @apply text-3xl font-bold text-center mb-12 text-white;
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
-        .skill-card {
-            @apply bg-gray-800 p-4 rounded-lg flex items-center space-x-3 transition-transform hover:scale-105;
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        .glass-dark {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Neon Glow Effects */
+        .neon-blue {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .neon-purple {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Enhanced Hover Effects */
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Custom Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .animate-slide-up {
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .animate-slide-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .animate-slide-right {
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        .animate-pulse-slow {
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        /* Project Card Effects */
         .project-card {
-            @apply bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 flex flex-col border border-transparent;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .project-card:hover {
-             transform: scale(1.05);
-             border-color: rgba(59, 130, 246, 0.5);
-             box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-        }
-        .project-card-content {
-            @apply p-6 flex flex-col flex-grow;
-        }
-        .timeline-item {
-            @apply relative pl-8 sm:pl-12 py-4;
-        }
-        .timeline-item::before {
+
+        .project-card::before {
             content: '';
-            @apply absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-blue-500 rounded-full border-4 border-gray-800;
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
         }
-        .timeline-line {
-            @apply absolute left-[7px] top-0 bottom-0 w-0.5 bg-gray-700;
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05) rotateY(5deg);
+            box-shadow: 0 25px 50px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Skill Progress Bars */
+        .skill-progress {
+            position: relative;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 4px;
+            animation: skillLoad 2s ease-out;
+        }
+
+        @keyframes skillLoad {
+            from { width: 0; }
+        }
+
+        /* Timeline Enhancements */
+        .timeline-item {
+            position: relative;
+            opacity: 0;
+            animation: fadeInTimeline 0.8s ease-out forwards;
+        }
+
+        .timeline-item:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .timeline-item:nth-child(odd) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeInTimeline {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Contact Form Enhancement */
+        .form-field {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .form-field:focus-within {
+            transform: scale(1.02);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .project-card:hover {
+                transform: scale(1.02);
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #2563eb, #7c3aed);
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased text-white">
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes" id="floating-shapes"></div>
+    </div>
 
     <!-- Header / Navbar -->
-    <header class="bg-gray-900/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
+    <header class="glass fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-xl font-bold text-white">Amirudin.dev</a>
+            <a href="#" class="text-2xl font-bold gradient-text">Amirudin.dev</a>
             <nav class="hidden md:flex space-x-8">
-                <a href="#about" class="text-gray-300 hover:text-blue-400 transition-colors">Tentang Saya</a>
-                <a href="#skills" class="text-gray-300 hover:text-blue-400 transition-colors">Keahlian</a>
-                <a href="#projects" class="text-gray-300 hover:text-blue-400 transition-colors">Proyek</a>
-                <a href="#experience" class="text-gray-300 hover:text-blue-400 transition-colors">Pengalaman</a>
-                <a href="#contact" class="text-gray-300 hover:text-blue-400 transition-colors">Kontak</a>
+                <a href="#about" class="text-gray-300 hover:text-blue-400 transition-all duration-300 relative group">
+                    Tentang Saya
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#skills" class="text-gray-300 hover:text-blue-400 transition-all duration-300 relative group">
+                    Keahlian
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#projects" class="text-gray-300 hover:text-blue-400 transition-all duration-300 relative group">
+                    Proyek
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#experience" class="text-gray-300 hover:text-blue-400 transition-all duration-300 relative group">
+                    Pengalaman
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#contact" class="text-gray-300 hover:text-blue-400 transition-all duration-300 relative group">
+                    Kontak
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
             </nav>
-            <button id="mobile-menu-button" class="md:hidden text-white">
-                <i data-lucide="menu"></i>
+            <button id="mobile-menu-button" class="md:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors">
+                <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#about" class="block py-2 px-6 text-gray-300 hover:bg-gray-700">Tentang Saya</a>
-            <a href="#skills" class="block py-2 px-6 text-gray-300 hover:bg-gray-700">Keahlian</a>
-            <a href="#projects" class="block py-2 px-6 text-gray-300 hover:bg-gray-700">Proyek</a>
-            <a href="#experience" class="block py-2 px-6 text-gray-300 hover:bg-gray-700">Pengalaman</a>
-            <a href="#contact" class="block py-2 px-6 text-gray-300 hover:bg-gray-700">Kontak</a>
+        <div id="mobile-menu" class="hidden md:hidden glass-dark">
+            <a href="#about" class="block py-3 px-6 text-gray-300 hover:bg-white/10 hover:text-blue-400 transition-colors">Tentang Saya</a>
+            <a href="#skills" class="block py-3 px-6 text-gray-300 hover:bg-white/10 hover:text-blue-400 transition-colors">Keahlian</a>
+            <a href="#projects" class="block py-3 px-6 text-gray-300 hover:bg-white/10 hover:text-blue-400 transition-colors">Proyek</a>
+            <a href="#experience" class="block py-3 px-6 text-gray-300 hover:bg-white/10 hover:text-blue-400 transition-colors">Pengalaman</a>
+            <a href="#contact" class="block py-3 px-6 text-gray-300 hover:bg-white/10 hover:text-blue-400 transition-colors">Kontak</a>
         </div>
     </header>
 
     <main>
         <!-- Hero Section -->
-        <section id="home" class="min-h-screen flex items-center bg-gray-900">
-            <div class="container mx-auto px-6 text-center">
-                <img src="https://placehold.co/150x150/007BFF/FFFFFF?text=A" alt="Foto Profil Amirudin" class="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-blue-500 shadow-lg">
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-2">AMIRUDIN</h1>
-                <h2 class="text-2xl md:text-3xl font-light mb-4 gradient-text">Full Stack Developer & HRIS Supervisor</h2>
-                <p class="max-w-3xl mx-auto text-lg text-gray-400 mb-8">
-                    Pengembang berpengalaman lebih dari 8 tahun dalam membangun solusi web, mobile, dan ERP, dengan spesialisasi pada platform HRIS dan integrasi AI.
-                </p>
-                <div class="flex justify-center space-x-4">
-                    <a href="#projects" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full transition-transform hover:scale-105">
-                        Lihat Proyek Saya
-                    </a>
-                    <a href="#contact" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-8 rounded-full transition-transform hover:scale-105">
-                        Hubungi Saya
-                    </a>
+        <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+            <div class="container mx-auto px-6 text-center z-10">
+                <div class="animate-slide-up opacity-0" style="animation-delay: 0.2s; animation-fill-mode: forwards;">
+                    <div class="relative inline-block mb-8">
+                        <img src="https://placehold.co/200x200/007BFF/FFFFFF?text=A" alt="Foto Profil Amirudin" class="w-48 h-48 rounded-full mx-auto neon-blue animate-pulse-slow border-4 border-blue-500/30">
+                        <div class="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 animate-spin" style="animation-duration: 8s;"></div>
+                    </div>
                 </div>
-                 <div class="mt-8 flex justify-center space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-blue-400"><i data-lucide="github" class="w-8 h-8"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-blue-400"><i data-lucide="linkedin" class="w-8 h-8"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-blue-400"><i data-lucide="download" class="w-8 h-8"></i></a>
+                
+                <div class="animate-slide-up opacity-0" style="animation-delay: 0.4s; animation-fill-mode: forwards;">
+                    <h1 class="text-5xl md:text-7xl font-black mb-4 tracking-tight">
+                        <span class="gradient-text">AMIRUDIN</span>
+                    </h1>
+                </div>
+                
+                <div class="animate-slide-up opacity-0" style="animation-delay: 0.6s; animation-fill-mode: forwards;">
+                    <h2 class="text-2xl md:text-4xl font-light mb-6 text-gray-300">
+                        Full Stack Developer & 
+                        <span class="gradient-text font-semibold">HRIS Supervisor</span>
+                    </h2>
+                </div>
+                
+                <div class="animate-slide-up opacity-0" style="animation-delay: 0.8s; animation-fill-mode: forwards;">
+                    <p class="max-w-4xl mx-auto text-lg md:text-xl text-gray-400 mb-12 leading-relaxed">
+                        Pengembang berpengalaman lebih dari 8 tahun dalam membangun solusi web, mobile, dan ERP, dengan spesialisasi pada platform HRIS dan integrasi AI.
+                    </p>
+                </div>
+                
+                <div class="animate-slide-up opacity-0" style="animation-delay: 1s; animation-fill-mode: forwards;">
+                    <div class="flex flex-col sm:flex-row justify-center gap-6 mb-12">
+                        <a href="#projects" class="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-semibold text-white overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/25">
+                            <span class="relative z-10">Lihat Proyek Saya</span>
+                            <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </a>
+                        <a href="#contact" class="group px-8 py-4 glass rounded-full font-semibold text-white border-2 border-white/20 hover:border-blue-400/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10">
+                            Hubungi Saya
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="animate-slide-up opacity-0" style="animation-delay: 1.2s; animation-fill-mode: forwards;">
+                    <div class="flex justify-center space-x-8">
+                        <a href="#" class="group p-3 glass rounded-full hover:neon-blue transition-all duration-300">
+                            <i data-lucide="github" class="w-8 h-8 text-gray-400 group-hover:text-blue-400 transition-colors"></i>
+                        </a>
+                        <a href="#" class="group p-3 glass rounded-full hover:neon-blue transition-all duration-300">
+                            <i data-lucide="linkedin" class="w-8 h-8 text-gray-400 group-hover:text-blue-400 transition-colors"></i>
+                        </a>
+                        <a href="#" class="group p-3 glass rounded-full hover:neon-blue transition-all duration-300">
+                            <i data-lucide="download" class="w-8 h-8 text-gray-400 group-hover:text-blue-400 transition-colors"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-20 bg-gray-800/50">
+        <section id="about" class="py-32 relative">
             <div class="container mx-auto px-6">
-                <h2 class="section-title">Tentang Saya</h2>
-                <div class="max-w-4xl mx-auto text-center text-lg text-gray-300 leading-relaxed">
-                    <p>
-                        Saya adalah seorang Full Stack Developer dan Supervisor HRIS dengan keahlian yang terbukti dalam pengembangan aplikasi web, desktop, dan mobile. Mahir dalam tumpukan teknologi modern termasuk PHP, JavaScript, Python, Golang, dan Java Spring. Saya juga terampil dalam merancang API yang tangguh, menggunakan Docker untuk kontainerisasi, dan mengintegrasikan solusi berbasis data menggunakan PostgreSQL dan kerangka kerja machine learning. Saat ini sedang melanjutkan studi ke jenjang S2 Ilmu Komputer di Universitas Budi Luhur untuk memperdalam pengetahuan.
-                    </p>
+                <div class="text-center mb-20">
+                    <h2 class="text-4xl md:text-6xl font-bold gradient-text mb-6">Tentang Saya</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+                </div>
+                
+                <div class="max-w-6xl mx-auto">
+                    <div class="glass rounded-3xl p-8 md:p-12 hover-lift">
+                        <p class="text-lg md:text-xl text-gray-300 leading-relaxed text-center">
+                            Saya adalah seorang Full Stack Developer dan Supervisor HRIS dengan keahlian yang terbukti dalam pengembangan aplikasi web, desktop, dan mobile. Mahir dalam tumpukan teknologi modern termasuk PHP, JavaScript, Python, Golang, dan Java Spring. Saya juga terampil dalam merancang API yang tangguh, menggunakan Docker untuk kontainerisasi, dan mengintegrasikan solusi berbasis data menggunakan PostgreSQL dan kerangka kerja machine learning. Saat ini sedang melanjutkan studi ke jenjang S2 Ilmu Komputer di Universitas Budi Luhur untuk memperdalam pengetahuan.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Skills Section -->
-        <section id="skills" class="py-20">
+        <section id="skills" class="py-32">
             <div class="container mx-auto px-6">
-                <h2 class="section-title">Keahlian Teknis</h2>
+                <div class="text-center mb-20">
+                    <h2 class="text-4xl md:text-6xl font-bold gradient-text mb-6">Keahlian Teknis</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+                </div>
+                
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Backend -->
-                    <div class="bg-gray-800 p-6 rounded-lg">
-                        <h3 class="text-xl font-semibold text-white mb-4">Backend Development</h3>
-                        <div class="space-y-3">
-                            <span class="skill-card"><i data-lucide="server" class="text-blue-400"></i><span>PHP & Laravel, CodeIgniter</span></span>
-                            <span class="skill-card"><i data-lucide="code" class="text-blue-400"></i><span>Python & FastAPI</span></span>
-                            <span class="skill-card"><i data-lucide="box" class="text-blue-400"></i><span>Golang, Java Spring, ASP.NET</span></span>
+                    <div class="glass rounded-2xl p-8 hover-lift group">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <i data-lucide="server" class="w-8 h-8 text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Backend Development</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300">PHP & Laravel</span>
+                                    <span class="text-blue-400">95%</span>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress::after" style="width: 95%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300">Python & FastAPI</span>
+                                    <span class="text-blue-400">90%</span>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress::after" style="width: 90%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300">Golang & Java</span>
+                                    <span class="text-blue-400">85%</span>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress::after" style="width: 85%;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <!-- Frontend -->
-                    <div class="bg-gray-800 p-6 rounded-lg">
-                        <h3 class="text-xl font-semibold text-white mb-4">Frontend Development</h3>
-                        <div class="space-y-3">
-                            <span class="skill-card"><i data-lucide="smartphone" class="text-blue-400"></i><span>ReactJS & React Native</span></span>
-                            <span class="skill-card"><i data-lucide="code-2" class="text-blue-400"></i><span>JavaScript & jQuery</span></span>
-                            <span class="skill-card"><i data-lucide="layout-template" class="text-blue-400"></i><span>HTML5, CSS3, Bootstrap</span></span>
+                    <div class="glass rounded-2xl p-8 hover-lift group">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <i data-lucide="smartphone" class="w-8 h-8 text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Frontend Development</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300">React & React Native</span>
+                                    <span class="text-purple-400">92%</span>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress::after" style="width: 92%; background: linear-gradient(90deg, #8b5cf6, #ec4899);"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300">JavaScript & jQuery</span>
+                                    <span class="text-purple-400">95%</span>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress::after" style="width: 95%; background: linear-gradient(90deg, #8b5cf6, #ec4899);"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300">HTML5 & CSS3</span>
+                                    <span class="text-purple-400">98%</span>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress::after" style="width: 98%; background: linear-gradient(90deg, #8b5cf6, #ec4899);"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <!-- Database & DevOps -->
-                    <div class="bg-gray-800 p-6 rounded-lg">
-                        <h3 class="text-xl font-semibold text-white mb-4">Database & DevOps</h3>
-                        <div class="space-y-3">
-                            <span class="skill-card"><i data-lucide="database" class="text-blue-400"></i><span>PostgreSQL & MySQL</span></span>
-                            <span class="skill-card"><i data-lucide="docker" class="text-blue-400"></i><span>Docker & Kubernetes</span></span>
-                            <span class="skill-card"><i data-lucide="cloud" class="text-blue-400"></i><span>Git & Cloud Hosting</span></span>
+                    <div class="glass rounded-2xl p-8 hover-lift group">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <i data-lucide="database" class="w-8 h-8 text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Database & DevOps</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300">PostgreSQL & MySQL</span>
+                                    <span class="text-green-400">93%</span>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress::after" style="width: 93%; background: linear-gradient(90deg, #10b981, #14b8a6);"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300">Docker & Kubernetes</span>
+                                    <span class="text-green-400">88%</span>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress::after" style="width: 88%; background: linear-gradient(90deg, #10b981, #14b8a6);"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300">Git & Cloud Hosting</span>
+                                    <span class="text-green-400">90%</span>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress::after" style="width: 90%; background: linear-gradient(90deg, #10b981, #14b8a6);"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <!-- ERP & AI/ML -->
-                    <div class="bg-gray-800 p-6 rounded-lg">
-                        <h3 class="text-xl font-semibold text-white mb-4">ERP & AI/ML</h3>
-                        <div class="space-y-3">
-                            <span class="skill-card"><i data-lucide="briefcase" class="text-blue-400"></i><span>Dynamics NAVISION, AXAPTA, SAP HR</span></span>
-                            <span class="skill-card"><i data-lucide="brain-circuit" class="text-blue-400"></i><span>Scikit-learn & TensorFlow</span></span>
+                    <div class="glass rounded-2xl p-8 hover-lift group">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <i data-lucide="brain-circuit" class="w-8 h-8 text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-4">ERP & AI/ML</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300">NAVISION & AXAPTA</span>
+                                    <span class="text-orange-400">85%</span>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress::after" style="width: 85%; background: linear-gradient(90deg, #f97316, #ef4444);"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300">SAP HR</span>
+                                    <span class="text-orange-400">80%</span>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress::after" style="width: 80%; background: linear-gradient(90deg, #f97316, #ef4444);"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300">ML & TensorFlow</span>
+                                    <span class="text-orange-400">75%</span>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="skill-progress::after" style="width: 75%; background: linear-gradient(90deg, #f97316, #ef4444);"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -160,220 +551,445 @@
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="py-20 bg-gray-800/50">
+        <section id="projects" class="py-32">
             <div class="container mx-auto px-6">
-                <h2 class="section-title">Proyek Unggulan</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    
-                    <!-- Project Card: HR Analytics Dashboard -->
-                    <div class="project-card">
-                        <div class="project-card-content">
-                            <div class="flex items-center mb-3">
-                                 <i data-lucide="bar-chart-3" class="w-8 h-8 mr-3 text-blue-400"></i>
-                                 <h3 class="text-xl font-bold text-white">Dashboard Analitik HR</h3>
+                <div class="text-center mb-20">
+                    <h2 class="text-4xl md:text-6xl font-bold gradient-text mb-6">Proyek Unggulan</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <!-- HR Analytics Dashboard -->
+                    <div class="project-card glass rounded-2xl overflow-hidden group">
+                        <div class="p-8">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
+                                    <i data-lucide="bar-chart-3" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white">Dashboard Analitik HR</h3>
                             </div>
-                            <p class="text-gray-400 mb-4 flex-grow">Dashboard interaktif untuk visualisasi dan analisis data sumber daya manusia.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-red-900/50 text-red-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Laravel</span>
-                                <span class="bg-green-900/50 text-green-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">PostgreSQL</span>
+                            <p class="text-gray-400 mb-6 flex-grow">Dashboard interaktif untuk visualisasi dan analisis data sumber daya manusia dengan insight mendalam.</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-red-500/20 text-red-300 text-xs font-semibold rounded-full border border-red-500/30">Laravel</span>
+                                <span class="px-3 py-1 bg-green-500/20 text-green-300 text-xs font-semibold rounded-full border border-green-500/30">PostgreSQL</span>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Project Card: HRMS -->
-                    <div class="project-card">
-                        <div class="project-card-content">
-                            <div class="flex items-center mb-3">
-                                 <i data-lucide="users" class="w-8 h-8 mr-3 text-blue-400"></i>
-                                 <h3 class="text-xl font-bold text-white">HRMS</h3>
-                            </div>
-                            <p class="text-gray-400 mb-4 flex-grow">Sistem manajemen SDM komprehensif untuk mengelola data karyawan, penggajian, dan lainnya.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-orange-900/50 text-orange-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">CodeIgniter</span>
-                                <span class="bg-green-900/50 text-green-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">PostgreSQL</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project Card: E-recruitment -->
-                    <div class="project-card">
-                        <div class="project-card-content">
-                            <div class="flex items-center mb-3">
-                                 <i data-lucide="user-check" class="w-8 h-8 mr-3 text-blue-400"></i>
-                                 <h3 class="text-xl font-bold text-white">E-Recruitment</h3>
-                            </div>
-                            <p class="text-gray-400 mb-4 flex-grow">Platform rekrutmen online dari pendaftaran kandidat hingga proses perekrutan.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-red-900/50 text-red-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Laravel</span>
-                                <span class="bg-green-900/50 text-green-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">PostgreSQL</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project Card: Attendance App -->
-                    <div class="project-card">
-                        <div class="project-card-content">
-                            <div class="flex items-center mb-3">
-                                 <i data-lucide="calendar-check" class="w-8 h-8 mr-3 text-blue-400"></i>
-                                 <h3 class="text-xl font-bold text-white">Attendance App</h3>
-                            </div>
-                            <p class="text-gray-400 mb-4 flex-grow">Aplikasi absensi mobile dengan backend yang tangguh untuk pelacakan kehadiran.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-blue-900/50 text-blue-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">React Native</span>
-                                <span class="bg-red-900/50 text-red-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Laravel</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project Card: mydaqu.id -->
-                    <div class="project-card">
-                        <div class="project-card-content">
-                            <div class="flex items-center mb-3">
-                                 <i data-lucide="graduation-cap" class="w-8 h-8 mr-3 text-blue-400"></i>
-                                 <h3 class="text-xl font-bold text-white">mydaqu.id</h3>
-                            </div>
-                            <p class="text-gray-400 mb-4 flex-grow">Aplikasi web & mobile untuk melihat hasil belajar siswa, pembayaran, nilai, dll.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-orange-900/50 text-orange-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">CodeIgniter</span>
-                                <span class="bg-blue-900/50 text-blue-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">React Native</span>
-                                <span class="bg-red-900/50 text-red-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Laravel</span>
-                                <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">MySQL</span>
-                            </div>
-                            <div class="flex space-x-4 mt-auto">
-                                <a href="https://mydaqu.id/login" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 font-semibold">Kunjungi Aplikasi</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project Card: Virtual Try-On -->
-                    <div class="project-card">
-                        <div class="project-card-content">
-                            <div class="flex items-center mb-3">
-                                 <i data-lucide="shirt" class="w-8 h-8 mr-3 text-blue-400"></i>
-                                 <h3 class="text-xl font-bold text-white">Virtual Try-On</h3>
-                            </div>
-                            <p class="text-gray-400 mb-4 flex-grow">Aplikasi web yang memungkinkan pengguna mencoba pakaian secara virtual menggunakan teknologi AI.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-blue-900/50 text-blue-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">ReactJS</span>
-                                <span class="bg-purple-900/50 text-purple-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">AI Integration</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project Card: E-Patrol -->
-                    <div class="project-card">
-                        <div class="project-card-content">
-                            <div class="flex items-center mb-3">
-                                 <i data-lucide="shield" class="w-8 h-8 mr-3 text-blue-400"></i>
-                                 <h3 class="text-xl font-bold text-white">Digital Patrol System</h3>
-                            </div>
-                            <p class="text-gray-400 mb-4 flex-grow">Sistem patroli digital berbasis mobile untuk monitoring keamanan secara real-time.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-blue-900/50 text-blue-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">React Native</span>
-                                <span class="bg-red-900/50 text-red-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Laravel</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project Card: HSE Management -->
-                    <div class="project-card">
-                        <div class="project-card-content">
-                            <div class="flex items-center mb-3">
-                                 <i data-lucide="shield-check" class="w-8 h-8 mr-3 text-blue-400"></i>
-                                 <h3 class="text-xl font-bold text-white">HSE Management</h3>
-                            </div>
-                            <p class="text-gray-400 mb-4 flex-grow">Sistem untuk mengelola aspek Kesehatan, Keselamatan, dan Lingkungan (K3L).</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-red-900/50 text-red-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Laravel</span>
-                                <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Bootstrap</span>
+                            <div class="flex space-x-4">
+                                <button class="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-2 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+                                    <i data-lucide="eye" class="w-4 h-4 inline mr-2"></i>View
+                                </button>
                             </div>
                         </div>
                     </div>
                     
+                    <!-- HRMS -->
+                    <div class="project-card glass rounded-2xl overflow-hidden group">
+                        <div class="p-8">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
+                                    <i data-lucide="users" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white">HRMS</h3>
+                            </div>
+                            <p class="text-gray-400 mb-6 flex-grow">Sistem manajemen SDM komprehensif untuk mengelola data karyawan, penggajian, dan workflow HR.</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-orange-500/20 text-orange-300 text-xs font-semibold rounded-full border border-orange-500/30">CodeIgniter</span>
+                                <span class="px-3 py-1 bg-green-500/20 text-green-300 text-xs font-semibold rounded-full border border-green-500/30">PostgreSQL</span>
+                            </div>
+                            <div class="flex space-x-4">
+                                <button class="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+                                    <i data-lucide="eye" class="w-4 h-4 inline mr-2"></i>View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- E-recruitment -->
+                    <div class="project-card glass rounded-2xl overflow-hidden group">
+                        <div class="p-8">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
+                                    <i data-lucide="user-check" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white">E-Recruitment</h3>
+                            </div>
+                            <p class="text-gray-400 mb-6 flex-grow">Platform rekrutmen online modern dari pendaftaran kandidat hingga proses perekrutan lengkap.</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-red-500/20 text-red-300 text-xs font-semibold rounded-full border border-red-500/30">Laravel</span>
+                                <span class="px-3 py-1 bg-green-500/20 text-green-300 text-xs font-semibold rounded-full border border-green-500/30">PostgreSQL</span>
+                            </div>
+                            <div class="flex space-x-4">
+                                <button class="flex-1 bg-gradient-to-r from-green-500 to-teal-500 text-white py-2 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+                                    <i data-lucide="eye" class="w-4 h-4 inline mr-2"></i>View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Attendance App -->
+                    <div class="project-card glass rounded-2xl overflow-hidden group">
+                        <div class="p-8">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
+                                    <i data-lucide="calendar-check" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white">Attendance App</h3>
+                            </div>
+                            <p class="text-gray-400 mb-6 flex-grow">Aplikasi absensi mobile dengan backend yang tangguh untuk pelacakan kehadiran real-time.</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs font-semibold rounded-full border border-blue-500/30">React Native</span>
+                                <span class="px-3 py-1 bg-red-500/20 text-red-300 text-xs font-semibold rounded-full border border-red-500/30">Laravel</span>
+                            </div>
+                            <div class="flex space-x-4">
+                                <button class="flex-1 bg-gradient-to-r from-yellow-500 to-orange-500 text-white py-2 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+                                    <i data-lucide="eye" class="w-4 h-4 inline mr-2"></i>View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- mydaqu.id -->
+                    <div class="project-card glass rounded-2xl overflow-hidden group">
+                        <div class="p-8">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
+                                    <i data-lucide="graduation-cap" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white">mydaqu.id</h3>
+                            </div>
+                            <p class="text-gray-400 mb-6 flex-grow">Platform edukasi lengkap untuk melihat hasil belajar siswa, pembayaran, nilai, dan manajemen akademik.</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-orange-500/20 text-orange-300 text-xs font-semibold rounded-full border border-orange-500/30">CodeIgniter</span>
+                                <span class="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs font-semibold rounded-full border border-blue-500/30">React Native</span>
+                                <span class="px-3 py-1 bg-sky-500/20 text-sky-300 text-xs font-semibold rounded-full border border-sky-500/30">MySQL</span>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="flex-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-2 px-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 text-sm">
+                                    <i data-lucide="eye" class="w-4 h-4 inline mr-1"></i>View
+                                </button>
+                                <a href="https://mydaqu.id/login" target="_blank" rel="noopener noreferrer" class="flex-1 bg-white/10 border border-white/20 text-white py-2 px-3 rounded-lg font-semibold hover:bg-white/20 transition-all duration-300 text-sm text-center">
+                                    <i data-lucide="external-link" class="w-4 h-4 inline mr-1"></i>Live
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Virtual Try-On -->
+                    <div class="project-card glass rounded-2xl overflow-hidden group">
+                        <div class="p-8">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-500 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
+                                    <i data-lucide="shirt" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white">Virtual Try-On</h3>
+                            </div>
+                            <p class="text-gray-400 mb-6 flex-grow">Aplikasi web inovatif yang memungkinkan pengguna mencoba pakaian secara virtual menggunakan AI.</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs font-semibold rounded-full border border-blue-500/30">ReactJS</span>
+                                <span class="px-3 py-1 bg-purple-500/20 text-purple-300 text-xs font-semibold rounded-full border border-purple-500/30">AI Integration</span>
+                            </div>
+                            <div class="flex space-x-4">
+                                <button class="flex-1 bg-gradient-to-r from-pink-500 to-rose-500 text-white py-2 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+                                    <i data-lucide="eye" class="w-4 h-4 inline mr-2"></i>View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- E-Patrol -->
+                    <div class="project-card glass rounded-2xl overflow-hidden group">
+                        <div class="p-8">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
+                                    <i data-lucide="shield" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white">Digital Patrol</h3>
+                            </div>
+                            <p class="text-gray-400 mb-6 flex-grow">Sistem patroli digital berbasis mobile untuk monitoring keamanan secara real-time dengan GPS tracking.</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs font-semibold rounded-full border border-blue-500/30">React Native</span>
+                                <span class="px-3 py-1 bg-red-500/20 text-red-300 text-xs font-semibold rounded-full border border-red-500/30">Laravel</span>
+                            </div>
+                            <div class="flex space-x-4">
+                                <button class="flex-1 bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-2 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+                                    <i data-lucide="eye" class="w-4 h-4 inline mr-2"></i>View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HSE Management -->
+                    <div class="project-card glass rounded-2xl overflow-hidden group">
+                        <div class="p-8">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-500 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
+                                    <i data-lucide="shield-check" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white">HSE Management</h3>
+                            </div>
+                            <p class="text-gray-400 mb-6 flex-grow">Sistem komprehensif untuk mengelola aspek Kesehatan, Keselamatan, dan Lingkungan (K3L) perusahaan.</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-red-500/20 text-red-300 text-xs font-semibold rounded-full border border-red-500/30">Laravel</span>
+                                <span class="px-3 py-1 bg-sky-500/20 text-sky-300 text-xs font-semibold rounded-full border border-sky-500/30">Bootstrap</span>
+                            </div>
+                            <div class="flex space-x-4">
+                                <button class="flex-1 bg-gradient-to-r from-emerald-500 to-green-500 text-white py-2 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+                                    <i data-lucide="eye" class="w-4 h-4 inline mr-2"></i>View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Experience Section -->
-        <section id="experience" class="py-20">
+        <section id="experience" class="py-32">
             <div class="container mx-auto px-6">
-                <h2 class="section-title">Pengalaman Kerja</h2>
-                <div class="max-w-3xl mx-auto relative">
-                    <div class="timeline-line"></div>
-                    
-                    <!-- Experience Item 1 -->
-                    <div class="timeline-item">
-                        <h3 class="text-lg font-semibold text-white">HRIS Supervisor & Full Stack Developer</h3>
-                        <p class="text-blue-400 font-medium">PT Indofood Fortuna Makmur (Indofood Group)</p>
-                        <p class="text-sm text-gray-500 mb-2">Juni 2023 - Sekarang</p>
-                        <ul class="list-disc list-inside text-gray-400 space-y-1">
-                            <li>Memimpin pengembangan dan implementasi solusi HRIS.</li>
-                            <li>Mengembangkan aplikasi web dan mobile untuk alur kerja HR.</li>
-                        </ul>
-                    </div>
-                    
-                    <!-- Experience Item 2 -->
-                    <div class="timeline-item">
-                        <h3 class="text-lg font-semibold text-white">Full Stack Developer</h3>
-                        <p class="text-blue-400 font-medium">PT Daarul Quran Group</p>
-                        <p class="text-sm text-gray-500 mb-2">September 2019 - Juni 2023</p>
-                         <ul class="list-disc list-inside text-gray-400 space-y-1">
-                            <li>Merancang dan menerapkan aplikasi bisnis penting dengan Laravel, CodeIgniter, dan React Native.</li>
-                            <li>Mengelola hosting cloud dan optimisasi database.</li>
-                        </ul>
-                    </div>
+                <div class="text-center mb-20">
+                    <h2 class="text-4xl md:text-6xl font-bold gradient-text mb-6">Pengalaman Kerja</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="relative">
+                        <!-- Timeline Line -->
+                        <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500"></div>
+                        
+                        <!-- Experience Items -->
+                        <div class="space-y-12">
+                            <!-- Experience 1 -->
+                            <div class="timeline-item relative flex items-start">
+                                <div class="absolute left-6 w-4 h-4 bg-blue-500 rounded-full border-4 border-gray-900 shadow-lg"></div>
+                                <div class="ml-20 glass rounded-2xl p-8 hover-lift">
+                                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                                        <div>
+                                            <h3 class="text-2xl font-bold text-white mb-2">HRIS Supervisor & Full Stack Developer</h3>
+                                            <p class="text-blue-400 font-semibold text-lg">PT Indofood Fortuna Makmur (Indofood Group)</p>
+                                        </div>
+                                        <div class="mt-2 md:mt-0">
+                                            <span class="px-4 py-2 bg-blue-500/20 text-blue-300 rounded-full text-sm font-semibold border border-blue-500/30">
+                                                Juni 2023 - Sekarang
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <ul class="text-gray-300 space-y-2">
+                                        <li class="flex items-start">
+                                            <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0"></i>
+                                            Memimpin pengembangan dan implementasi solusi HRIS untuk 5000+ karyawan
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0"></i>
+                                            Mengembangkan aplikasi web dan mobile untuk otomatisasi workflow HR
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0"></i>
+                                            Meningkatkan efisiensi proses HR hingga 60% melalui digitalisasi
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
 
-                    <!-- Experience Item 3 -->
-                    <div class="timeline-item">
-                        <h3 class="text-lg font-semibold text-white">ERP AXAPTA System Specialist</h3>
-                        <p class="text-blue-400 font-medium">PT SPVMB</p>
-                        <p class="text-sm text-gray-500 mb-2">Desember 2017 - Juni 2018</p>
-                         <ul class="list-disc list-inside text-gray-400 space-y-1">
-                            <li>Memberikan dukungan dan kustomisasi untuk Dynamics AXAPTA ERP.</li>
-                        </ul>
-                    </div>
+                            <!-- Experience 2 -->
+                            <div class="timeline-item relative flex items-start">
+                                <div class="absolute left-6 w-4 h-4 bg-purple-500 rounded-full border-4 border-gray-900 shadow-lg"></div>
+                                <div class="ml-20 glass rounded-2xl p-8 hover-lift">
+                                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                                        <div>
+                                            <h3 class="text-2xl font-bold text-white mb-2">Full Stack Developer</h3>
+                                            <p class="text-purple-400 font-semibold text-lg">PT Daarul Quran Group</p>
+                                        </div>
+                                        <div class="mt-2 md:mt-0">
+                                            <span class="px-4 py-2 bg-purple-500/20 text-purple-300 rounded-full text-sm font-semibold border border-purple-500/30">
+                                                Sep 2019 - Juni 2023
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <ul class="text-gray-300 space-y-2">
+                                        <li class="flex items-start">
+                                            <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0"></i>
+                                            Merancang dan mengimplementasikan 15+ aplikasi bisnis kritis dengan Laravel & React Native
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0"></i>
+                                            Mengelola infrastruktur cloud hosting dan optimisasi database
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0"></i>
+                                            Membangun platform mydaqu.id yang melayani 10,000+ pengguna aktif
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
 
-                    <!-- Experience Item 4 -->
-                    <div class="timeline-item">
-                        <h3 class="text-lg font-semibold text-white">IT ERP System Specialist</h3>
-                        <p class="text-blue-400 font-medium">PT Beton Perkasa Wijaksana</p>
-                        <p class="text-sm text-gray-500 mb-2">Oktober 2015 - Desember 2017</p>
-                         <ul class="list-disc list-inside text-gray-400 space-y-1">
-                            <li>Melakukan implementasi ERP, pengembangan laporan, dan troubleshooting.</li>
-                        </ul>
+                            <!-- Experience 3 -->
+                            <div class="timeline-item relative flex items-start">
+                                <div class="absolute left-6 w-4 h-4 bg-pink-500 rounded-full border-4 border-gray-900 shadow-lg"></div>
+                                <div class="ml-20 glass rounded-2xl p-8 hover-lift">
+                                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                                        <div>
+                                            <h3 class="text-2xl font-bold text-white mb-2">ERP AXAPTA System Specialist</h3>
+                                            <p class="text-pink-400 font-semibold text-lg">PT SPVMB</p>
+                                        </div>
+                                        <div class="mt-2 md:mt-0">
+                                            <span class="px-4 py-2 bg-pink-500/20 text-pink-300 rounded-full text-sm font-semibold border border-pink-500/30">
+                                                Des 2017 - Juni 2018
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <ul class="text-gray-300 space-y-2">
+                                        <li class="flex items-start">
+                                            <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0"></i>
+                                            Memberikan support dan kustomisasi untuk Microsoft Dynamics AXAPTA ERP
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0"></i>
+                                            Mengoptimalkan proses bisnis melalui konfigurasi modul ERP
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Experience 4 -->
+                            <div class="timeline-item relative flex items-start">
+                                <div class="absolute left-6 w-4 h-4 bg-teal-500 rounded-full border-4 border-gray-900 shadow-lg"></div>
+                                <div class="ml-20 glass rounded-2xl p-8 hover-lift">
+                                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                                        <div>
+                                            <h3 class="text-2xl font-bold text-white mb-2">IT ERP System Specialist</h3>
+                                            <p class="text-teal-400 font-semibold text-lg">PT Beton Perkasa Wijaksana</p>
+                                        </div>
+                                        <div class="mt-2 md:mt-0">
+                                            <span class="px-4 py-2 bg-teal-500/20 text-teal-300 rounded-full text-sm font-semibold border border-teal-500/30">
+                                                Okt 2015 - Des 2017
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <ul class="text-gray-300 space-y-2">
+                                        <li class="flex items-start">
+                                            <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0"></i>
+                                            Melakukan implementasi ERP, pengembangan laporan, dan troubleshooting sistem
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0"></i>
+                                            Melatih end-user dan menyusun dokumentasi teknis sistem
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-20 bg-gray-800/50">
+        <section id="contact" class="py-32">
             <div class="container mx-auto px-6">
-                <h2 class="section-title">Hubungi Saya</h2>
-                <p class="text-center max-w-2xl mx-auto mb-12 text-gray-400">
-                    Saya terbuka untuk diskusi mengenai peluang kolaborasi atau proyek baru. Silakan hubungi saya melalui email atau formulir di bawah ini.
-                </p>
-                <div class="max-w-lg mx-auto bg-gray-800 p-8 rounded-lg shadow-lg">
-                    <form action="#">
-                        <div class="mb-4">
-                            <label for="name" class="block text-gray-300 mb-2">Nama</label>
-                            <input type="text" id="name" name="name" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <div class="text-center mb-20">
+                    <h2 class="text-4xl md:text-6xl font-bold gradient-text mb-6">Hubungi Saya</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+                    <p class="text-xl text-gray-400 mt-8 max-w-3xl mx-auto">
+                        Saya terbuka untuk diskusi mengenai peluang kolaborasi atau proyek baru. Mari berkolaborasi untuk menciptakan solusi teknologi yang luar biasa!
+                    </p>
+                </div>
+                
+                <div class="max-w-6xl mx-auto">
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <!-- Contact Info -->
+                        <div class="space-y-8">
+                            <div class="glass rounded-2xl p-8 hover-lift">
+                                <div class="flex items-center mb-6">
+                                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mr-4">
+                                        <i data-lucide="mail" class="w-6 h-6 text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-white">Email</h3>
+                                        <a href="mailto:amirudin50592@gmail.com" class="text-blue-400 hover:text-blue-300 transition-colors">
+                                            amirudin50592@gmail.com
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="glass rounded-2xl p-8 hover-lift">
+                                <div class="flex items-center mb-6">
+                                    <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl flex items-center justify-center mr-4">
+                                        <i data-lucide="phone" class="w-6 h-6 text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-white">WhatsApp</h3>
+                                        <p class="text-gray-400">Available for quick consultation</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="glass rounded-2xl p-8 hover-lift">
+                                <div class="flex items-center mb-6">
+                                    <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mr-4">
+                                        <i data-lucide="map-pin" class="w-6 h-6 text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-white">Location</h3>
+                                        <p class="text-gray-400">Jakarta, Indonesia</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Social Links -->
+                            <div class="flex space-x-4">
+                                <a href="#" class="flex-1 glass rounded-2xl p-6 text-center hover-lift group">
+                                    <i data-lucide="github" class="w-8 h-8 mx-auto mb-2 text-gray-400 group-hover:text-white transition-colors"></i>
+                                    <p class="text-sm text-gray-400 group-hover:text-white transition-colors">GitHub</p>
+                                </a>
+                                <a href="#" class="flex-1 glass rounded-2xl p-6 text-center hover-lift group">
+                                    <i data-lucide="linkedin" class="w-8 h-8 mx-auto mb-2 text-gray-400 group-hover:text-blue-400 transition-colors"></i>
+                                    <p class="text-sm text-gray-400 group-hover:text-white transition-colors">LinkedIn</p>
+                                </a>
+                                <a href="#" class="flex-1 glass rounded-2xl p-6 text-center hover-lift group">
+                                    <i data-lucide="download" class="w-8 h-8 mx-auto mb-2 text-gray-400 group-hover:text-green-400 transition-colors"></i>
+                                    <p class="text-sm text-gray-400 group-hover:text-white transition-colors">Resume</p>
+                                </a>
+                            </div>
                         </div>
-                        <div class="mb-4">
-                            <label for="email" class="block text-gray-300 mb-2">Email</label>
-                            <input type="email" id="email" name="email" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                        <!-- Contact Form -->
+                        <div class="glass rounded-2xl p-8 hover-lift">
+                            <form class="space-y-6" onsubmit="handleSubmit(event)">
+                                <div class="form-field">
+                                    <label for="name" class="block text-gray-300 mb-2 font-semibold">Nama Lengkap</label>
+                                    <input type="text" id="name" name="name" required 
+                                           class="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-6 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                           placeholder="Masukkan nama lengkap Anda">
+                                </div>
+                                
+                                <div class="form-field">
+                                    <label for="email" class="block text-gray-300 mb-2 font-semibold">Email</label>
+                                    <input type="email" id="email" name="email" required 
+                                           class="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-6 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                           placeholder="nama@email.com">
+                                </div>
+                                
+                                <div class="form-field">
+                                    <label for="subject" class="block text-gray-300 mb-2 font-semibold">Subjek</label>
+                                    <input type="text" id="subject" name="subject" required 
+                                           class="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-6 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                           placeholder="Subjek pesan Anda">
+                                </div>
+                                
+                                <div class="form-field">
+                                    <label for="message" class="block text-gray-300 mb-2 font-semibold">Pesan</label>
+                                    <textarea id="message" name="message" rows="6" required 
+                                              class="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-6 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none"
+                                              placeholder="Tulis pesan Anda di sini..."></textarea>
+                                </div>
+                                
+                                <button type="submit" 
+                                        class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
+                                    <i data-lucide="send" class="w-5 h-5 inline mr-2"></i>
+                                    Kirim Pesan
+                                </button>
+                            </form>
                         </div>
-                        <div class="mb-4">
-                            <label for="message" class="block text-gray-300 mb-2">Pesan</label>
-                            <textarea id="message" name="message" rows="4" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-transform hover:scale-105">
-                            Kirim Pesan
-                        </button>
-                    </form>
-                    <div class="mt-8 text-center text-gray-400">
-                        <p>atau hubungi langsung di:</p>
-                        <a href="mailto:amirudin50592@gmail.com" class="text-blue-400 hover:underline">amirudin50592@gmail.com</a>
                     </div>
                 </div>
             </div>
@@ -381,13 +997,26 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 py-8">
-        <div class="container mx-auto px-6 text-center text-gray-500">
-            <div class="mb-4 flex justify-center space-x-6">
-                <a href="#" class="text-gray-400 hover:text-blue-400"><i data-lucide="github" class="w-6 h-6"></i></a>
-                <a href="#" class="text-gray-400 hover:text-blue-400"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+    <footer class="py-12 border-t border-white/10">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <div class="flex justify-center space-x-8 mb-8">
+                    <a href="#" class="group p-3 glass rounded-full hover:neon-blue transition-all duration-300">
+                        <i data-lucide="github" class="w-6 h-6 text-gray-400 group-hover:text-blue-400 transition-colors"></i>
+                    </a>
+                    <a href="#" class="group p-3 glass rounded-full hover:neon-blue transition-all duration-300">
+                        <i data-lucide="linkedin" class="w-6 h-6 text-gray-400 group-hover:text-blue-400 transition-colors"></i>
+                    </a>
+                    <a href="#" class="group p-3 glass rounded-full hover:neon-blue transition-all duration-300">
+                        <i data-lucide="mail" class="w-6 h-6 text-gray-400 group-hover:text-blue-400 transition-colors"></i>
+                    </a>
+                </div>
+                <p class="text-gray-400 text-lg">
+                    &copy; 2024 Designed & Developed with <span class="text-red-400">❤</span> by 
+                    <span class="gradient-text font-semibold">Amirudin</span>
+                </p>
+                <p class="text-gray-500 text-sm mt-2">Crafted with modern web technologies</p>
             </div>
-            <p>&copy; 2024 Didesain dan dikembangkan oleh Amirudin.</p>
         </div>
     </footer>
 
@@ -395,9 +1024,28 @@
         // Initialize Lucide icons
         lucide.createIcons();
 
+        // Create floating shapes for background animation
+        function createFloatingShapes() {
+            const container = document.getElementById('floating-shapes');
+            const colors = ['rgba(59, 130, 246, 0.1)', 'rgba(139, 92, 246, 0.1)', 'rgba(236, 72, 153, 0.1)', 'rgba(34, 197, 94, 0.1)'];
+            
+            for (let i = 0; i < 15; i++) {
+                const shape = document.createElement('div');
+                shape.className = 'shape';
+                shape.style.left = Math.random() * 100 + '%';
+                shape.style.width = Math.random() * 100 + 50 + 'px';
+                shape.style.height = shape.style.width;
+                shape.style.background = colors[Math.floor(Math.random() * colors.length)];
+                shape.style.animationDelay = Math.random() * 20 + 's';
+                shape.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                container.appendChild(shape);
+            }
+        }
+
         // Mobile Menu Toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
+        
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
@@ -409,6 +1057,204 @@
                 mobileMenu.classList.add('hidden');
             });
         });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.3)';
+                header.style.backdropFilter = 'blur(20px)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.05)';
+                header.style.backdropFilter = 'blur(20px)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.timeline-item, .project-card, .hover-lift').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(el);
+        });
+
+        // Animate skill progress bars on scroll
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBars = entry.target.querySelectorAll('.skill-progress');
+                    progressBars.forEach(bar => {
+                        const width = bar.dataset.width || '90%';
+                        bar.style.setProperty('--progress-width', width);
+                        bar.classList.add('animate');
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('#skills .glass').forEach(el => {
+            skillObserver.observe(el);
+        });
+
+        // Form submission handler
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Create mailto link
+            const mailtoLink = `mailto:amirudin50592@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Nama: ${name}\nEmail: ${email}\n\nPesan:\n${message}`)}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            showNotification('Pesan berhasil disiapkan! Email client Anda akan terbuka.', 'success');
+            
+            // Reset form
+            event.target.reset();
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-20 right-6 z-50 glass rounded-xl p-4 text-white transform translate-x-full transition-transform duration-300 ${type === 'success' ? 'border-green-500/50' : 'border-blue-500/50'}`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i data-lucide="${type === 'success' ? 'check-circle' : 'info'}" class="w-5 h-5 mr-3 ${type === 'success' ? 'text-green-400' : 'text-blue-400'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            lucide.createIcons();
+            
+            // Show notification
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Hide notification
+            setTimeout(() => {
+                notification.style.transform = 'translateX(full)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('#home');
+            if (parallax) {
+                const speed = scrolled * 0.5;
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+
+        // Add glow effect to project cards on hover
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 25px 50px rgba(59, 130, 246, 0.3)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '';
+            });
+        });
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            createFloatingShapes();
+            
+            // Add stagger animation to hero elements
+            const heroElements = document.querySelectorAll('#home .animate-slide-up');
+            heroElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.animationPlayState = 'running';
+                }, index * 200);
+            });
+        });
+
+        // Add typing effect to hero subtitle
+        function typeWriter(element, text, speed = 50) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+
+        // Initialize typing effect
+        setTimeout(() => {
+            const heroSubtitle = document.querySelector('#home h2');
+            if (heroSubtitle) {
+                const text = heroSubtitle.textContent;
+                typeWriter(heroSubtitle, text, 30);
+            }
+        }, 1000);
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+
+        // Performance optimization: Lazy load images
+        const images = document.querySelectorAll('img[data-src]');
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        images.forEach(img => imageObserver.observe(img));
     </script>
 </body>
 </html>
